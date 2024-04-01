@@ -15,7 +15,7 @@ app.get('/', async (req, res, next) => {
   res.send([
     `Cloudflare node: ${cloudflare[cf].city}`,
     `Nearest Hetzner data center: ${nearestHetzner.city}, distance ${Math.round(nearestHetzner.distance)} km.`,
-    `Nearest Upcloud data center: ${nearestUpCloud.city}, distance ${Math.round(nearestUpCloud.distance)} km.`
+    `Nearest UpCloud data center: ${nearestUpCloud.city}, distance ${Math.round(nearestUpCloud.distance)} km.`
   ].join('<br>'));
 });
 
