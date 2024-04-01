@@ -1,0 +1,17 @@
+{
+  "name": "datacenter-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@pakastin/datacenters": "^1.2.0",
+    "@turf/turf": "^6.5.0",
+    "express": "^4.19.2"
+  }
+}
