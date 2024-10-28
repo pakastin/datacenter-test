@@ -2,4 +2,4 @@
 docker context use pakastin
 docker build --tag ghcr.io/pakastin/datacentertest .
 docker push ghcr.io/pakastin/datacentertest
-docker service update --image ghcr.io/pakastin/datacentertest pakastin_datacentertest
+docker service update --force --image ghcr.io/pakastin/datacentertest pakastin_datacentertest

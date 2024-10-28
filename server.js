@@ -4,7 +4,7 @@ import { distance, point } from '@turf/turf';
 
 const data = { cloudflare, hetzner, upcloud };
 
-const { NODE_PORT } = process.env;
+const { NODE_PORT = 8080, PING_SERVERS } = process.env;
 
 const app = express();
 
@@ -19,6 +19,35 @@ app.get('/', async (req, res, next) => {
     `Nearest Hetzner data center: ${nearestHetzner.city}, distance ${Math.round(nearestHetzner.distance)} km.`,
     `Nearest UpCloud data center: ${nearestUpCloud.city}, distance ${Math.round(nearestUpCloud.distance)} km.`
   ].join('<br>'));
+});
+
+app.get('/ping', async (req, res, next) => {
+  res.set('Cache-Control', 'private, no-store');
+  res.send(`<!DOCTYPE html>
+<body>
+  <script>
+  (async () => {
+    const servers = ${JSON.stringify((PING_SERVERS || '').split(','), null, 2)};
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    for (const server of servers) {
+      const startTime = Date.now();
+      let latency;
+      try {
+        await fetch('https://' + server + '/ping');
+        latency = (Date.now() - startTime) + ' ms';
+      } catch (err) {
+        latency = '-';
+      }
+      const $result = document.createElement('p');
+      $result.textContent = server + ': ' + latency;
+      document.body.appendChild($result);
+    }
+  })();
+    </script>
+</body>
+</html>`);
 });
 
 ['cloudflare', 'hetzner', 'upcloud'].forEach(company => {
